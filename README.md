@@ -147,3 +147,4 @@ You have 2 common options:
    GND  ← Battery -, Arduino GND
    (5V OUT → Arduino 5V, *only if safe on your board*)
 
+
