@@ -1,151 +1,84 @@
-﻿# Bluetooth Controlled Arduino RC Car 
+﻿# 🏎️ Super Bluetooth RC Car Project
 
-This project is a simple **Bluetooth-controlled RC car** built with:
+Welcome to the **Bluetooth RC Car** project! This code helps you build a robot car that you can control with your smartphone. It uses an **Arduino**, an **L298N Motor Driver**, and a **Bluetooth Module**.
 
-- **Arduino Uno**
-- **L298N dual H-bridge motor driver**
-- **HC-05 Bluetooth module**
-- **4 DC gear motors** (2 left, 2 right)
-- **Battery pack** (for motors, and optionally the Arduino)
+Ready to become a robotics engineer? Let's build! 
 
-You can control the car from your phone (or any Bluetooth terminal app) using single-letter commands:
-`F` = Forward, `B` = Backward, `L` = Left, `R` = Right, `S` = Stop.
+##  The Circuit Diagram
+Here is the map to connect your wires. Be careful and follow the lines!
 
----
+![RC Car Circuit Diagram](https://raw.githubusercontent.com/ZAN-Tech-bd/RC-Car-Using-L298N-Motor-Driver/refs/heads/main/RC%20Car%20circuit%20diagrams.jpg)
 
-## ✨ Features
+##  What You Need (Parts List)
+Before we start, make sure you have these parts:
 
-- Control via **Bluetooth** (HC-05 + phone app)
-- Simple **single-character commands**
-- Uses `SoftwareSerial` so hardware serial (USB) is free for debugging
-- Can drive **4 motors** using **L298N** (2 motors per side in parallel)
-- Compatible with **Arduino Uno**
+- **Arduino Board** (Uno or Nano) - *The Brain* 
+- **L298N Motor Driver** - *The Muscle*
+- **Bluetooth Module** (HC-05 or HC-06) - *The Ears* 
+- **4 x DC Motors** with Wheels - *The Legs* 
+- **Battery Pack** (Li-ion or 9V) - *The Energy* 
+- **Jumper Wires** - *The Nerves* 
+- **Chassis** (The car body)
 
----
+##  How to Connect (Pinout)
 
-## 🧰 Hardware Required
+Use this table to connect the **L298N** to your **Arduino**:
 
-- 1 × **Arduino Uno**
-- 1 × **L298N motor driver module**
-- 1 × **HC-05 Bluetooth module**
-- 4 × **DC motors** (2 left side, 2 right side)
-- 1 × **Battery pack** (e.g. 7.4–12 V for motors, depending on motor spec)
-- Jumper wires
-- Chassis, wheels, etc. (optional but recommended 😉)
+| L298N Pin | Arduino Pin | What it does? |
+| :--- | :--- | :--- |
+| **ENA** | Pin **5** | Controls Speed (Motor A) |
+| **IN1** | Pin **6** | Motor A Direction |
+| **IN2** | Pin **7** | Motor A Direction |
+| **IN3** | Pin **8** | Motor B Direction |
+| **IN4** | Pin **9** | Motor B Direction |
+| **ENB** | Pin **10** | Controls Speed (Motor B) |
 
----
+**For the Bluetooth Module:**
+* **VCC** -> 5V
+* **GND** -> GND
+* **TX** -> RX (Pin 0 on Arduino)
+* **RX** -> TX (Pin 1 on Arduino)
 
-## 🔌 Wiring / Circuit Diagram
+> **⚠️ SUPER IMPORTANT TIP:** When you are uploading the code to the Arduino computer, **unplug the TX and RX wires**. Plug them back in after the upload is finished!
 
-### 1. Arduino ↔ L298N Motor Driver
+##  Secret Control Codes
 
-**Control pins (Arduino → L298N)**
+You will need a **Bluetooth Car Controller App** on your phone. Set up the buttons to send these letters:
 
-| Function            | Arduino Pin | L298N Pin |
-|---------------------|------------:|-----------|
-| Left motor IN1      | D8          | IN1       |
-| Left motor IN2      | D9          | IN2       |
-| Right motor IN3     | D10         | IN3       |
-| Right motor IN4     | D11         | IN4       |
+### Movement
+| Key | Action | Icon |
+| :--- | :--- | :--- |
+| **F** | Move Forward | ⬆️ |
+| **B** | Move Backward | ⬇️ |
+| **L** | Turn Left | ⬅️ |
+| **R** | Turn Right | ➡️ |
+| **S** | Stop | 🛑 |
 
-![RC Car Circuit Diagram](https://github.com/ZAN-Tech-bd/RC-Car-Using-L298N-Motor-Driver/blob/main/RC%20Car%20circuit%20diagrams.png?raw=true)
+### Special Moves (Diagonals)
+* **G** = Forward Left ↖️
+* **I** = Forward Right ↗️
+* **H** = Backward Left ↙️
+* **J** = Backward Right ↘️
 
-⚙️ **Speed control (optional)**  
-If you want **full-speed always**, leave **ENA** and **ENB** jumpers in place on the L298N board.  
-If you want **PWM speed control**, remove the jumpers and connect:
+### Speed Control
+* **1** (Slowest) to **9** (Fast)
+* **q** = Maximum Speed (Turbo Mode!) 
 
-- ENA → any PWM pin (e.g. D5)
-- ENB → any PWM pin (e.g. D6)
+## How to Install
 
-(Then you’d update the code to use `analogWrite()` on ENA/ENB.)
+1. Download and install the **Arduino IDE** on your computer.
+2. Connect your Arduino board to the computer with a USB cable.
+3. Copy the code from this repository.
+4. Paste it into the Arduino IDE.
+5. **Disconnect the Bluetooth TX/RX wires** (just for a second!).
+6. Click the **Upload** (Arrow) button.
+7. Reconnect the Bluetooth wires.
+8. Power up your car using the batteries.
 
----
+## Troubleshooting
 
-### 2. Motors ↔ L298N Outputs
-
-We have **4 motors**: 2 on the left side, 2 on the right side.
-
-You can connect them **in parallel** per side:
-
-**Left side motors (2 motors):**
-
-- Motor A (+) → L298N **OUT1**
-- Motor A (–) → L298N **OUT2**
-- Motor B (+) → L298N **OUT1** (same as A +)
-- Motor B (–) → L298N **OUT2** (same as A –)
-
-**Right side motors (2 motors):**
-
-- Motor C (+) → L298N **OUT3**
-- Motor C (–) → L298N **OUT4**
-- Motor D (+) → L298N **OUT3** (same as C +)
-- Motor D (–) → L298N **OUT4** (same as C –)
-
-Make sure **left motors spin forward in the same direction**, and same for the right side.
-If one motor spins backwards, reverse its two wires.
+* **The car isn't moving?** Check if your battery is charged. The L298N needs good power!
+* **The wheels are spinning the wrong way?** Swap the wires on the motor that is spinning backwards.
+* **The code won't upload?** Did you remember to unplug the Bluetooth TX/RX wires while uploading?
 
 ---
-
-### 3. Power Connections
-
-> ⚠️ Always **connect all grounds together**.
-
-- Battery + (motors) → L298N **12V** (or +12V / V_IN, depending on board)
-- Battery – → L298N **GND**
-- L298N **GND** → Arduino **GND** (common ground)
-
-You have 2 common options:
-
-#### Option A: Separate Power
-- Motors powered by battery (L298N 12V input).
-- Arduino powered by **USB** or separate 5V source.
-- L298N **5V_EN** jumper removed (depending on board).
-
-#### Option B: L298N powers Arduino (only if your L298N supports 5V output)
-- Battery to L298N 12V.
-- L298N **5V OUT** → Arduino **5V** (or Vin depending on your board and module design).
-- **Check your L298N board markings** before doing this.
-
----
-
-### 4. HC-05 Bluetooth Module ↔ Arduino
-
-| HC-05 Pin | Arduino Pin     | Notes                                                                 |
-|-----------|------------------|-----------------------------------------------------------------------|
-| VCC       | 5V               | Most HC-05 modules use 5V input                                      |
-| GND       | GND              | Common ground                                                        |
-| TXD       | D2 (Software RX) | Arduino **RX** for Bluetooth                                         |
-| RXD       | D3 (Software TX) | Arduino **TX** for Bluetooth via a **voltage divider** recommended   |
-
-> ⚠️ **Important:**  
-> HC-05 RX is **3.3V logic**, Arduino D3 is **5V**.  
-> Use a simple **voltage divider** (e.g. 1 kΩ + 2 kΩ) between **D3 → HC-05 RX**.
-
----
-
-### 🧾 ASCII Circuit Overview (Logical)
-
-```text
-[ Phone ]
-    │  Bluetooth
-    ▼
-[ HC-05 ]
-   TX → Arduino D2 (BT RX)
-   RX ← Arduino D3 (BT TX, via divider)
-
-[ Arduino Uno ]
-   D8  → L298N IN1
-   D9  → L298N IN2
-   D10 → L298N IN3
-   D11 → L298N IN4
-   GND ↔ L298N GND, HC-05 GND, Battery -
-
-[ L298N ]
-   OUT1/OUT2 → Left motors (2 in parallel)
-   OUT3/OUT4 → Right motors (2 in parallel)
-   12V  ← Battery +
-   GND  ← Battery -, Arduino GND
-   (5V OUT → Arduino 5V, *only if safe on your board*)
-
-
-
