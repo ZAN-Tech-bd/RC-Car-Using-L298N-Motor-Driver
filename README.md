@@ -48,7 +48,7 @@ You can control the car from your phone (or any Bluetooth terminal app) using si
 | Right motor IN3     | D10         | IN3       |
 | Right motor IN4     | D11         | IN4       |
 
-![RC Car Circuit Diagram](https://github.com/ZAN-Tech-bd/RC-Car-Using-L298N-Motor-Driver/blob/main/RC%20Car%20circuit%20diagram.png?raw=true)
+![RC Car Circuit Diagram](https://github.com/ZAN-Tech-bd/RC-Car-Using-L298N-Motor-Driver/blob/main/RC%20Car%20circuit%20diagrams.png?raw=true)
 
 ⚙️ **Speed control (optional)**  
 If you want **full-speed always**, leave **ENA** and **ENB** jumpers in place on the L298N board.  
@@ -146,5 +146,6 @@ You have 2 common options:
    12V  ← Battery +
    GND  ← Battery -, Arduino GND
    (5V OUT → Arduino 5V, *only if safe on your board*)
+
 
 
