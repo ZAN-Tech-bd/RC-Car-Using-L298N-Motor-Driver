@@ -8,7 +8,7 @@ Ready to become a robotics engineer? Let's build!
 Here is the map to connect your wires. Be careful and follow the lines!
 
 Motor Connection Circuit Diagram
-[Motor_conection_circuit](https://raw.githubusercontent.com/ZAN-Tech-bd/RC-Car-Using-L298N-Motor-Driver/refs/heads/main/motor-connection.jpg)
+![Motor_conection_circuit](https://raw.githubusercontent.com/ZAN-Tech-bd/RC-Car-Using-L298N-Motor-Driver/refs/heads/main/motor-connection.jpg)
 
 ![RC Car Circuit Diagram](https://raw.githubusercontent.com/ZAN-Tech-bd/RC-Car-Using-L298N-Motor-Driver/refs/heads/main/RC%20Car%20circuit%20diagrams.jpg)
 
@@ -86,3 +86,4 @@ You will need a **Bluetooth Car Controller App** on your phone. Set up the butto
 
 
 ---
+
