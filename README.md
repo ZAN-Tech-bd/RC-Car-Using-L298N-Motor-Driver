@@ -7,6 +7,9 @@ Ready to become a robotics engineer? Let's build!
 ##  The Circuit Diagram
 Here is the map to connect your wires. Be careful and follow the lines!
 
+Motor Connection Circuit Diagram
+[Motor_conection_circuit](https://raw.githubusercontent.com/ZAN-Tech-bd/RC-Car-Using-L298N-Motor-Driver/refs/heads/main/motor-connection.jpg)
+
 ![RC Car Circuit Diagram](https://raw.githubusercontent.com/ZAN-Tech-bd/RC-Car-Using-L298N-Motor-Driver/refs/heads/main/RC%20Car%20circuit%20diagrams.jpg)
 
 ##  What You Need (Parts List)
@@ -80,5 +83,6 @@ You will need a **Bluetooth Car Controller App** on your phone. Set up the butto
 * **The car isn't moving?** Check if your battery is charged. The L298N needs good power!
 * **The wheels are spinning the wrong way?** Swap the wires on the motor that is spinning backwards.
 * **The code won't upload?** Did you remember to unplug the Bluetooth TX/RX wires while uploading?
+
 
 ---
