@@ -1,148 +1,142 @@
-// ZAN Tech Bluetooth RC Car Code
+// ZAN Tech Bluetooth RC Car - Full Working Code
+// Works with Serial Monitor (type char + Enter) OR HC-05 Bluetooth module
+
 #define ENA 5
 #define IN1 6
-#define IN2 7 
-#define IN3 8 
+#define IN2 7
+#define IN3 8
 #define IN4 9
 #define ENB 10
 
-int incomingByte = 0;
-int speed_min = 125;
-int speed_max = 255;
-
-int speed_left = speed_max; 
-int speed_right = speed_max;
-
-// Function Declarations
-void left();
-void right();
-void forward();
-void backward();
-void forward_left();
-void forward_right();
-void back_left();
-void back_right();
-void stopy();
+char command;
+int speed_left = 200;
+int speed_right = 200;
 
 void setup() {
   Serial.begin(9600);
-  
+
   pinMode(ENA, OUTPUT);
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
   pinMode(ENB, OUTPUT);
+
+  Serial.println("Car ready. Send: F B L R I G H J S | speed 1-9,q");
 }
 
 void loop() {
   if (Serial.available() > 0) {
-    incomingByte = Serial.read();
-  }
+    command = Serial.read();
 
-  switch(incomingByte) {
-     case 'S': stopy(); break;
-     case 'B': backward(); break;
-     case 'F': forward(); break;
-     case 'R': right(); break;
-     case 'L': left(); break;
+    switch (command) {
+      case 'F': forward();       break;
+      case 'B': backward();      break;
+      case 'L': left();          break;
+      case 'R': right();         break;
+      case 'G': forward_left();  break;
+      case 'I': forward_right(); break;
+      case 'H': back_left();     break;
+      case 'J': back_right();    break;
+      case 'S': stopy();         break;
 
-     case '1': speed_left = 20; speed_right = 20; break;
-     case '2': speed_left = 40; speed_right = 40; break;
-     case '3': speed_left = 60; speed_right = 60; break;
-     case '4': speed_left = 80; speed_right = 80; break;
-     case '5': speed_left = 100; speed_right = 100; break;
-     case '6': speed_left = 120; speed_right = 120; break;
-     case '7': speed_left = 140; speed_right = 140; break;
-     case '8': speed_left = 160; speed_right = 160; break;
-     case '9': speed_left = 200; speed_right = 200; break;
-     case 'q': speed_left = 255; speed_right = 255; break;
-
-     case 'J': back_right(); break;
-     case 'H': back_left(); break;
-     case 'I': forward_right(); break;
-     case 'G': forward_left(); break;
+      case '1': speed_left = 20;  speed_right = 20;  break;
+      case '2': speed_left = 40;  speed_right = 40;  break;
+      case '3': speed_left = 60;  speed_right = 60;  break;
+      case '4': speed_left = 80;  speed_right = 80;  break;
+      case '5': speed_left = 100; speed_right = 100; break;
+      case '6': speed_left = 120; speed_right = 120; break;
+      case '7': speed_left = 140; speed_right = 140; break;
+      case '8': speed_left = 160; speed_right = 160; break;
+      case '9': speed_left = 200; speed_right = 200; break;
+      case 'q': speed_left = 255; speed_right = 255; break;
+    }
   }
 }
 
 // ===== MOVEMENT FUNCTIONS =====
-void left(){
-  analogWrite(ENA, speed_left);
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, LOW);
-  analogWrite(ENB, speed_right);
-}
 
-void right(){
+void forward() {
   analogWrite(ENA, speed_left);
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, HIGH);
-  analogWrite(ENB, speed_right);
-}
 
-void forward_left(){
-  analogWrite(ENA, speed_left);
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, LOW);
+  analogWrite(ENB, speed_right);
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
-  analogWrite(ENB, speed_right);
 }
 
-void forward_right(){
-  analogWrite(ENA, speed_left);
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, LOW);
-  analogWrite(ENB, speed_right);
-}
-
-void back_right(){
+void backward() {
   analogWrite(ENA, speed_left);
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, LOW);
-  analogWrite(ENB, speed_right);
-}
 
-void back_left(){
-  analogWrite(ENA, speed_left);
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, LOW);
+  analogWrite(ENB, speed_right);
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
-  analogWrite(ENB, speed_right);
 }
 
-void forward(){
-  analogWrite(ENA, speed_left);
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, LOW);
-  analogWrite(ENB, speed_right);
-}
-
-void backward(){
+void left() {
   analogWrite(ENA, speed_left);
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, HIGH);
+
   analogWrite(ENB, speed_right);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
 }
 
-void stopy(){
+void right() {
+  analogWrite(ENA, speed_left);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+
+  analogWrite(ENB, speed_right);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+void forward_left() {
+  analogWrite(ENA, speed_left / 2);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+
+  analogWrite(ENB, speed_right);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void forward_right() {
+  analogWrite(ENA, speed_left);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+
+  analogWrite(ENB, speed_right / 2);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void back_left() {
+  analogWrite(ENA, speed_left / 2);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+
+  analogWrite(ENB, speed_right);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+void back_right() {
+  analogWrite(ENA, speed_left);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+
+  analogWrite(ENB, speed_right / 2);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+void stopy() {
   analogWrite(ENA, 0);
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, LOW);
   analogWrite(ENB, 0);
 }
